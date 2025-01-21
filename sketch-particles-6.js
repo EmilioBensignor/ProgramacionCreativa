@@ -10,7 +10,7 @@ document.body.style.overflow = 'hidden';
 
 // CONFIGURACIÓN PRINCIPAL
 const settings = {
-    dimensions: [window.innerWidth, 400],
+    dimensions: [window.innerWidth, 500],
     animate: true,
     styleCanvas: false, // Desactivar estilos automáticos
     // Configuración específica del canvas
