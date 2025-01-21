@@ -11,12 +11,35 @@ const cursor = { x: 9999, y: 9999 };
 
 let elCanvas;
 
+// Agregamos las funciones de manejo de eventos del mouse
+const onMouseDown = (e) => {
+  window.addEventListener('mousemove', onMouseMove);
+  window.addEventListener('mouseup', onMouseUp);
+
+  onMouseMove(e);
+};
+
+const onMouseMove = (e) => {
+  const rect = elCanvas.getBoundingClientRect();
+
+  cursor.x = e.clientX - rect.left;
+  cursor.y = e.clientY - rect.top;
+};
+
+const onMouseUp = () => {
+  window.removeEventListener('mousemove', onMouseMove);
+  window.removeEventListener('mouseup', onMouseUp);
+
+  cursor.x = 9999;
+  cursor.y = 9999;
+};
+
 const sketch = ({ width, height, canvas }) => {
   let x, y, particle;
   let pos = [];
 
   elCanvas = canvas;
-  canvas.addEventListener('mousedown', onMouseDown)
+  canvas.addEventListener('mousedown', onMouseDown);
 
   // Aumentamos el número de partículas para mayor densidad
   for (let i = 0; i < 250; i++) {
@@ -42,11 +65,9 @@ const sketch = ({ width, height, canvas }) => {
     particles.forEach(particle => {
       particle.update();
       particle.draw(context);
-    })
+    });
   };
 };
-
-// ... (mantener los event listeners igual)
 
 class Particle {
   constructor({ x, y, radius = 10 }) {
